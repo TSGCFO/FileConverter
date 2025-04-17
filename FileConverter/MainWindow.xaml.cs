@@ -126,7 +126,6 @@ namespace FileConverter
             pnlParameters.Children.Clear();
 
             // Add parameters based on the selected conversion
-            // For now, we'll just add a few sample parameters for text to HTML conversion
             if (IsTextToHtmlSelected())
             {
                 // Title parameter
@@ -141,12 +140,42 @@ namespace FileConverter
                 lineBreaksPanel.Children.Add(new CheckBox { Name = "paramPreserveLineBreaks", IsChecked = true });
                 pnlParameters.Children.Add(lineBreaksPanel);
             }
+            // Add parameters for TxtToTsv conversion
+            else if (IsTxtToTsvSelected())
+            {
+                // Line delimiter parameter
+                var delimiterPanel = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 5, 0, 5) };
+                delimiterPanel.Children.Add(new TextBlock { Text = "Line Delimiter:", Width = 120, VerticalAlignment = VerticalAlignment.Center });
+                delimiterPanel.Children.Add(new TextBox { Name = "paramLineDelimiter", Width = 300, Text = "" });
+                pnlParameters.Children.Add(delimiterPanel);
+
+                // Explanation text
+                var explanationPanel = new StackPanel { Margin = new Thickness(0, 5, 0, 5) };
+                explanationPanel.Children.Add(new TextBlock
+                {
+                    Text = "Leave the delimiter empty to treat each line as a single column. Enter a delimiter (like a comma) to split each line into multiple columns.",
+                    TextWrapping = TextWrapping.Wrap
+                });
+                pnlParameters.Children.Add(explanationPanel);
+
+                // First line as header parameter
+                var headerPanel = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 5, 0, 5) };
+                headerPanel.Children.Add(new TextBlock { Text = "First Line is Header:", Width = 120, VerticalAlignment = VerticalAlignment.Center });
+                headerPanel.Children.Add(new CheckBox { Name = "paramFirstLineHeader", IsChecked = false });
+                pnlParameters.Children.Add(headerPanel);
+            }
         }
 
         private bool IsTextToHtmlSelected()
         {
             return cmbInputFormat.SelectedItem?.ToString() == "TXT" &&
                    cmbOutputFormat.SelectedItem?.ToString() == "HTML";
+        }
+
+        private bool IsTxtToTsvSelected()
+        {
+            return cmbInputFormat.SelectedItem?.ToString() == "TXT" &&
+                   cmbOutputFormat.SelectedItem?.ToString() == "TSV";
         }
 
         private ConversionParameters GetConversionParameters()
@@ -168,6 +197,22 @@ namespace FileConverter
                 if (lineBreaksCheckbox != null)
                 {
                     parameters.AddParameter("preserveLineBreaks", lineBreaksCheckbox.IsChecked == true);
+                }
+            }
+            else if (IsTxtToTsvSelected())
+            {
+                // Find the line delimiter parameter
+                var delimiterBox = FindChild<TextBox>(pnlParameters, "paramLineDelimiter");
+                if (delimiterBox != null)
+                {
+                    parameters.AddParameter("lineDelimiter", delimiterBox.Text);
+                }
+
+                // Find the first line as header parameter
+                var headerCheckbox = FindChild<CheckBox>(pnlParameters, "paramFirstLineHeader");
+                if (headerCheckbox != null)
+                {
+                    parameters.AddParameter("treatFirstLineAsHeader", headerCheckbox.IsChecked == true);
                 }
             }
 

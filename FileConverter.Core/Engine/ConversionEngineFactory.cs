@@ -31,6 +31,14 @@ namespace FileConverter.Core.Engine
                 new TxtToHtmlConverter(),
                 new TsvToCsvConverter(),
                 new CsvToTsvConverter(),
+                new HtmlToTsvConverter(),
+                new MarkdownToTsvConverter(),
+                new TxtToTsvConverter(),
+                new TxtToCsvConverter(),
+                new JsonToCsvConverter(),
+                new XmlToCsvConverter(),
+                new XmlToTsvConverter(),
+                new JsonToTsvConverter(),
                 // Add more converters here as they are implemented
             };
 
