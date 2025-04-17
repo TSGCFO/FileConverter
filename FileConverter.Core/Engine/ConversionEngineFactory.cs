@@ -1,6 +1,7 @@
 ﻿using FileConverter.Common.Interfaces;
 using System.Collections.Generic;
 using FileConverter.Converters.Documents;
+using FileConverter.Converters.Spreadsheets;
 
 namespace FileConverter.Core.Engine
 {
@@ -27,7 +28,9 @@ namespace FileConverter.Core.Engine
         {
             var converters = new List<IConverter>
             {
-                new TxtToHtmlConverter()
+                new TxtToHtmlConverter(),
+                new TsvToCsvConverter(),
+                new CsvToTsvConverter(),
                 // Add more converters here as they are implemented
             };
 

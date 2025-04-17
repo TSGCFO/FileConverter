@@ -5,8 +5,87 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileConverter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="File Converter" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Text="File Converter" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <!-- Input File Selection -->
+        <GroupBox Grid.Row="1" Header="Input File" Padding="10" Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="txtInputPath" Grid.Column="0" Margin="0,0,10,0" Padding="5"/>
+                <Button x:Name="btnBrowseInput" Grid.Column="1" Content="Browse..." Padding="15,5" Click="btnBrowseInput_Click"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Output File Selection -->
+        <GroupBox Grid.Row="2" Header="Output File" Padding="10" Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="txtOutputPath" Grid.Column="0" Margin="0,0,10,0" Padding="5"/>
+                <Button x:Name="btnBrowseOutput" Grid.Column="1" Content="Browse..." Padding="15,5" Click="btnBrowseOutput_Click"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Conversion Options -->
+        <GroupBox Grid.Row="3" Header="Conversion Options" Padding="10" Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Grid.Column="0" Header="Input Format" Margin="0,0,5,0" Padding="5">
+                    <ComboBox x:Name="cmbInputFormat" SelectionChanged="cmbInputFormat_SelectionChanged" Padding="5"/>
+                </GroupBox>
+
+                <GroupBox Grid.Column="1" Header="Output Format" Margin="5,0,0,0" Padding="5">
+                    <ComboBox x:Name="cmbOutputFormat" SelectionChanged="cmbOutputFormat_SelectionChanged" Padding="5"/>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
+
+        <!-- Additional Parameters -->
+        <GroupBox Grid.Row="4" Header="Additional Parameters" Padding="10" Margin="0,0,0,10">
+            <StackPanel x:Name="pnlParameters">
+                <!-- This will be populated dynamically based on the selected conversion -->
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Conversion Log -->
+        <GroupBox Grid.Row="5" Header="Conversion Log" Padding="10" Margin="0,0,0,10">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <TextBox x:Name="txtLog" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
+            </ScrollViewer>
+        </GroupBox>
+
+        <!-- Progress and Convert Buttons -->
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <ProgressBar x:Name="progressBar" Grid.Column="0" Height="20" Margin="0,0,10,0"/>
+            <Button x:Name="btnConvert" Grid.Column="1" Content="Convert" Padding="30,10" Click="btnConvert_Click"/>
+        </Grid>
     </Grid>
 </Window>
