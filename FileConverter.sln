@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileConverter.Core", "FileC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileConverter.Common", "FileConverter.Common\FileConverter.Common.csproj", "{C5EF7557-D36A-426D-AA4B-8843481406EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileConverter.Converters,", "FileConverter.Converters,\FileConverter.Converters,.csproj", "{041B4DE8-33F9-49BC-BE10-BC3FB1F14A7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileConverter.Converters", "FileConverter.Converters,\FileConverter.Converters.csproj", "{041B4DE8-33F9-49BC-BE10-BC3FB1F14A7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileConverter.UI", "FileConverter.UI\FileConverter.UI.csproj", "{E463DE0D-BFEF-4492-850A-4BECBEC51FF5}"
 EndProject

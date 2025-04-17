@@ -35,7 +35,7 @@ namespace FileConverter.Common.Interfaces
             string inputPath,
             string outputPath,
             ConversionParameters parameters,
-            IProgress<ConversionProgress> progress,
+            IProgress<ConversionProgress>? progress,
             CancellationToken cancellationToken);
     }
 }
