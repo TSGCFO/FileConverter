@@ -23,7 +23,7 @@ namespace FileConverter.Common.Models
         /// <summary>
         /// Gets a parameter value by name, or returns the default value if not found
         /// </summary>
-        public T GetParameter<T>(string name, T defaultValue = default)
+        public T GetParameter<T>(string name, T defaultValue)
         {
             if (Parameters.TryGetValue(name, out object? value) && value is T typedValue)
             {

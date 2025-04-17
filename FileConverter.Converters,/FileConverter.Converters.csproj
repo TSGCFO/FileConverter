@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FileConverter.Common\FileConverter.Common.csproj" />
-    <ProjectReference Include="..\FileConverter.Core\FileConverter.Core.csproj" />
   </ItemGroup>
 
 </Project>
