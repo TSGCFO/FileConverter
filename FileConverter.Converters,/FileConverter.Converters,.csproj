@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>FileConverter.Converters_</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FileConverter.Common\FileConverter.Common.csproj" />
+    <ProjectReference Include="..\FileConverter.Core\FileConverter.Core.csproj" />
+  </ItemGroup>
+
+</Project>
