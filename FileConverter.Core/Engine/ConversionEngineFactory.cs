@@ -47,6 +47,10 @@ namespace FileConverter.Core.Engine
                 new MarkdownToHtmlConverter(),
                 new PdfToTxtConverter(),
                 new DocxToTxtConverter(),
+                new RtfToTxtConverter(),
+                new RtfToTsvConverter(),
+                new RtfToCsvConverter(),
+                // new DocToTxtConverter(),
                 // Add more converters here as they are implemented
             };
 
