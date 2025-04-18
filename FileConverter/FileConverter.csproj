@@ -6,11 +6,24 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <BaseOutputPath>bin\Release\</BaseOutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <SignAssembly>False</SignAssembly>
+	<StartupObject>FileConverter.App</StartupObject>
+	<ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>True</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FileConverter.Common\FileConverter.Common.csproj" />
-    <ProjectReference Include="..\FileConverter.Converters,\FileConverter.Converters.csproj" />
+    <ProjectReference Include="..\FileConverter.Converters\FileConverter.Converters.csproj" />
     <ProjectReference Include="..\FileConverter.Core\FileConverter.Core.csproj" />
   </ItemGroup>
 
