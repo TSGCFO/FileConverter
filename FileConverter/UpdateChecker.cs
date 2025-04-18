@@ -8,41 +8,77 @@ namespace FileConverter
 {
     public class UpdateChecker
     {
-        private const string UpdateUrl = "https://your-website.com/updates/fileconverter.json";
         private readonly Version _currentVersion;
+        private readonly string _repositoryOwner;
+        private readonly string _repositoryName;
+        private readonly HttpClient _client;
 
-        public UpdateChecker(string currentVersion)
+        public UpdateChecker(string currentVersion, string repositoryOwner, string repositoryName)
         {
             _currentVersion = new Version(currentVersion);
+            _repositoryOwner = repositoryOwner;
+            _repositoryName = repositoryName;
+
+            _client = new HttpClient();
+            // GitHub API requires a user agent
+            _client.DefaultRequestHeaders.Add("User-Agent", "FileConverter-Update-Checker");
         }
 
         public async Task CheckForUpdatesAsync()
         {
             try
             {
-                using (var client = new HttpClient())
+                string apiUrl = $"https://api.github.com/repos/{_repositoryOwner}/{_repositoryName}/releases/latest";
+                var response = await _client.GetStringAsync(apiUrl);
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var releaseInfo = JsonSerializer.Deserialize<GitHubRelease>(response, options);
+
+                if (releaseInfo == null || string.IsNullOrEmpty(releaseInfo.TagName))
                 {
-                    var response = await client.GetStringAsync(UpdateUrl);
-                    var updateInfo = JsonSerializer.Deserialize<UpdateInfo>(response);
+                    return;
+                }
 
-                    var latestVersion = new Version(updateInfo.Version);
-                    if (latestVersion > _currentVersion)
+                // Remove 'v' prefix if present in tag name
+                string versionString = releaseInfo.TagName.TrimStart('v');
+
+                if (Version.TryParse(versionString, out Version latestVersion) &&
+                    latestVersion > _currentVersion)
+                {
+                    var result = MessageBox.Show(
+                        $"A new version ({releaseInfo.TagName}) is available!\n\n" +
+                        $"{releaseInfo.Body ?? "No release notes available."}\n\n" +
+                        "Would you like to download it now?",
+                        "Update Available",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Information);
+
+                    if (result == MessageBoxResult.Yes)
                     {
-                        var result = MessageBox.Show(
-                            $"A new version ({updateInfo.Version}) is available!\n\n{updateInfo.Description}\n\nWould you like to download it now?",
-                            "Update Available",
-                            MessageBoxButton.YesNo,
-                            MessageBoxImage.Information);
+                        // Find the asset that matches our installer
+                        var installerAsset = releaseInfo.Assets?.FirstOrDefault(
+                            asset => !string.IsNullOrEmpty(asset.Name) &&
+                                   asset.Name.EndsWith(".exe") &&
+                                   asset.Name.Contains("FileConverter"));
 
-                        if (result == MessageBoxResult.Yes)
+                        if (installerAsset != null && !string.IsNullOrEmpty(installerAsset.BrowserDownloadUrl))
                         {
                             // Open the download URL in the default browser
                             var processStartInfo = new System.Diagnostics.ProcessStartInfo
                             {
-                                FileName = updateInfo.DownloadUrl,
+                                FileName = installerAsset.BrowserDownloadUrl,
                                 UseShellExecute = true
                             };
                             System.Diagnostics.Process.Start(processStartInfo);
+                        }
+                        else if (!string.IsNullOrEmpty(releaseInfo.HtmlUrl))
+                        {
+                            // If no specific installer is found, open the release page
+                            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                            {
+                                FileName = releaseInfo.HtmlUrl,
+                                UseShellExecute = true
+                            });
                         }
                     }
                 }
@@ -54,11 +90,20 @@ namespace FileConverter
             }
         }
 
-        public class UpdateInfo
+        // Models for GitHub API responses
+        private class GitHubRelease
         {
-            public string Version { get; set; }
-            public string DownloadUrl { get; set; }
-            public string Description { get; set; }
+            public string? TagName { get; set; }
+            public string? Name { get; set; }
+            public string? Body { get; set; }
+            public string? HtmlUrl { get; set; }
+            public GitHubAsset[]? Assets { get; set; }
+        }
+
+        private class GitHubAsset
+        {
+            public string? Name { get; set; }
+            public string? BrowserDownloadUrl { get; set; }
         }
     }
 }
