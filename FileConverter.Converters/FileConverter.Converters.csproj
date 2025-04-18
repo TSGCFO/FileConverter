@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="DocumentFormat.OpenXml.Features" Version="3.3.0" />
     <PackageReference Include="itext7" Version="9.1.0" />
+    <PackageReference Include="Markdig" Version="0.41.0" />
     <PackageReference Include="PdfPig" Version="0.1.10" />
   </ItemGroup>
 

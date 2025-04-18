@@ -44,6 +44,8 @@ namespace FileConverter.Core.Engine
                 new DocxToTsvConverter(),
                 new PdfToCsvConverter(),
                 new PdfToTsvConverter(),
+                new MarkdownToHtmlConverter(),
+                new PdfToTxtConverter(),
                 // Add more converters here as they are implemented
             };
 
