@@ -39,6 +39,11 @@ namespace FileConverter.Core.Engine
                 new XmlToCsvConverter(),
                 new XmlToTsvConverter(),
                 new JsonToTsvConverter(),
+                // Add the new converters here
+                new DocxToCsvConverter(),
+                new DocxToTsvConverter(),
+                new PdfToCsvConverter(),
+                new PdfToTsvConverter(),
                 // Add more converters here as they are implemented
             };
 

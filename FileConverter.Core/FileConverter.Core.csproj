@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
+    <PackageReference Include="itext7" Version="9.1.0" />
+    <PackageReference Include="PdfPig" Version="0.1.10" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FileConverter.Common\FileConverter.Common.csproj" />
     <ProjectReference Include="..\FileConverter.Converters,\FileConverter.Converters.csproj" />
   </ItemGroup>
