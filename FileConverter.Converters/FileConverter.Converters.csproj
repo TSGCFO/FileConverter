@@ -10,9 +10,7 @@
     <PackageReference Include="DocumentFormat.OpenXml.Features" Version="3.3.0" />
     <PackageReference Include="itext7" Version="9.1.0" />
     <PackageReference Include="Markdig" Version="0.41.0" />
-    <PackageReference Include="NPOI.HWPFCore" Version="2.3.0.1" />
     <PackageReference Include="PdfPig" Version="0.1.10" />
-	<PackageReference Include="NPOI" Version="2.4.1" />
   </ItemGroup>
 
   <ItemGroup>
